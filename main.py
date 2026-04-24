@@ -197,7 +197,12 @@ def chat():
         )
 
         data = response.json()
-        reply = data.get("choices", [{}])[0].get("message", {}).get("content", "Error")
+        print("OPENROUTER RESPONSE:", data, flush=True)
+        
+        if "choices" in data:
+            reply = data["choices"][0]["message"]["content"]
+        else:
+            reply = "API Error: " + str(data)
 
     except Exception:
         reply = "⚠️ Network error. Try again."
