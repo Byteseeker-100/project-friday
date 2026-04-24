@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 API_KEY = os.getenv("API_KEY")
-print("API KEY:", API_KEY[:10], "length:", len(API_KEY), flush=True)
+print("API KEY LOADED:", bool(API_KEY), "length:", len(API_KEY) if API_KEY else 0, flush=True)
 
 # ---------------- DATABASE ---------------- #
 
@@ -16,7 +16,6 @@ def init_db():
     conn = sqlite3.connect("friday.db")
     c = conn.cursor()
 
-    # chat memory
     c.execute("""
         CREATE TABLE IF NOT EXISTS messages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,7 +24,6 @@ def init_db():
         )
     """)
 
-    # profile (name etc.)
     c.execute("""
         CREATE TABLE IF NOT EXISTS profile (
             key TEXT PRIMARY KEY,
@@ -33,7 +31,6 @@ def init_db():
         )
     """)
 
-    # long memory (important facts)
     c.execute("""
         CREATE TABLE IF NOT EXISTS long_memory (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,8 +91,8 @@ def save_long_memory(text):
     c = conn.cursor()
     try:
         c.execute("INSERT INTO long_memory (content) VALUES (?)", (text,))
-    except:
-        pass  # avoid duplicates
+    except sqlite3.IntegrityError:
+        pass
     conn.commit()
     conn.close()
 
@@ -109,19 +106,22 @@ def load_long_memory(limit=5):
 
 # ---------------- ROUTES ---------------- #
 
-@app.route('/')
+@app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route('/chat', methods=["POST"])
+@app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
 
     if not data or "message" not in data:
         return jsonify({"reply": "Invalid request"}), 400
 
-    user_message = data["message"]
+    user_message = data["message"].strip()
     msg = user_message.lower()
+
+    if not user_message:
+        return jsonify({"reply": "Please type something."})
 
     name = load_profile("name") or ""
 
@@ -136,19 +136,20 @@ def chat():
         save_profile("name", name.capitalize())
 
     elif msg.startswith("i am "):
-        name = msg.replace("i am", "").strip().split()[0]
-        save_profile("name", name.capitalize())
+        possible_name = msg.replace("i am", "").strip().split()[0]
+        if possible_name not in ["fine", "good", "tired", "sad", "happy", "okay"]:
+            name = possible_name
+            save_profile("name", name.capitalize())
 
     # ---- DIRECT RESPONSE ----
-    if msg in ["who am i", "what is my name"]:
+    if "who am i" in msg or "what is my name" in msg:
         name = load_profile("name")
         if name:
-            return jsonify({"reply": f"You are {name} 😊"})
-        else:
-            return jsonify({"reply": "I don't know your name yet."})
+            return jsonify({"reply": f"Your name is {name} 😊"})
+        return jsonify({"reply": "I don't know your name yet."})
 
-    # ---- SMART MEMORY (IMPORTANT FACTS) ----
-    important_words = ["goal", "dream", "like", "love", "plan"]
+    # ---- SMART MEMORY ----
+    important_words = ["goal", "dream", "like", "love", "plan", "want", "project"]
 
     for word in important_words:
         if word in msg:
@@ -160,7 +161,6 @@ def chat():
     memory = load_memory()
     facts = load_long_memory()
 
-    # ---- SYSTEM PROMPT ----
     system_prompt = {
         "role": "system",
         "content": (
@@ -168,21 +168,19 @@ def chat():
             f"User name: {name}\n"
             f"Important facts:\n{chr(10).join(facts)}\n\n"
             "Rules:\n"
-            "- Be natural and helpful\n"
-            "- Do NOT repeat introductions\n"
-            "- Do NOT say you remember conversations\n"
-            "- Do NOT assume powers\n"
-            "- Respond like ChatGPT\n"
-            "Reply short unless user asks for detailed explanation."
-            "Respond like ChatGPT. Be clear and helpful. Keep answers concise unless asked for detail."
+            "- Be natural and helpful.\n"
+            "- Do NOT repeat introductions.\n"
+            "- Do NOT say you remember conversations.\n"
+            "- Do NOT assume tools or powers you do not have.\n"
+            "- Reply short unless the user asks for detailed explanation.\n"
+            "- Respond like ChatGPT: clear, useful, and friendly.\n"
         )
     }
 
-    # ---- AI REQUEST ----
+    # ---- AI REQUEST WITH FALLBACK ----
     models = [
         "openai/gpt-oss-120b:free",
-        "meta-llama/llama-3-8b-instruct:free",
-        "mistralai/mistral-7b-instruct:free"
+        "openrouter/auto"
     ]
 
     reply = None
@@ -193,7 +191,7 @@ def chat():
                 "https://openrouter.ai/api/v1/chat/completions",
                 headers={
                     "Authorization": f"Bearer {API_KEY}",
-                    "HTTP-Referer": "https://friday-ai.onrender.com",
+                    "HTTP-Referer": "https://friday-ai-qk9a.onrender.com",
                     "X-Title": "FRIDAY AI",
                     "Content-Type": "application/json"
                 },
@@ -203,25 +201,24 @@ def chat():
                     "temperature": 0.7,
                     "max_tokens": 500
                 },
-                timeout=10
+                timeout=15
             )
 
             data = response.json()
 
-            if "choices" in data:
+            if response.status_code == 200 and "choices" in data:
                 reply = data["choices"][0]["message"]["content"]
                 print(f"✅ Used model: {model}", flush=True)
                 break
             else:
-                print(f"❌ Failed model {model}: {data}", flush=True)
+                print(f"❌ {model} failed:", data, flush=True)
 
         except Exception as e:
             print(f"⚠️ Error with {model}: {e}", flush=True)
 
     if not reply:
-        reply = "⚠️ All AI models are busy. Please try again."
+        reply = "⚠️ AI is temporarily unavailable. Try again."
 
-    # ---- SAVE AI RESPONSE ----
     save_message("assistant", reply)
 
     return jsonify({"reply": reply})
