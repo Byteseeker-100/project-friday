@@ -179,34 +179,47 @@ def chat():
     }
 
     # ---- AI REQUEST ----
-    try:
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {API_KEY}",
-                "HTTP-Referer": "http://localhost:5000",
-                "X-Title": "FRIDAY AI",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": "openai/gpt-oss-120b:free",
-                "messages": [system_prompt] + memory,
-                "temperature": 0.7,
-                "max_tokens": 500
-            },
-            timeout=10
-        )
+    models = [
+        "openai/gpt-oss-120b:free",
+        "meta-llama/llama-3-8b-instruct:free",
+        "mistralai/mistral-7b-instruct:free"
+    ]
 
-        data = response.json()
-        print("OPENROUTER RESPONSE:", data, flush=True)
+    reply = None
 
-        if "choices" in data:
-            reply = data["choices"][0]["message"]["content"]
-        else:
-            reply = "API Error: " + str(data)
+    for model in models:
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {API_KEY}",
+                    "HTTP-Referer": "https://friday-ai.onrender.com",
+                    "X-Title": "FRIDAY AI",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": model,
+                    "messages": [system_prompt] + memory,
+                    "temperature": 0.7,
+                    "max_tokens": 500
+                },
+                timeout=10
+            )
 
-    except Exception:
-        reply = "⚠️ Network error. Try again."
+            data = response.json()
+
+            if "choices" in data:
+                reply = data["choices"][0]["message"]["content"]
+                print(f"✅ Used model: {model}", flush=True)
+                break
+            else:
+                print(f"❌ Failed model {model}: {data}", flush=True)
+
+        except Exception as e:
+            print(f"⚠️ Error with {model}: {e}", flush=True)
+
+    if not reply:
+        reply = "⚠️ All AI models are busy. Please try again."
 
     # ---- SAVE AI RESPONSE ----
     save_message("assistant", reply)
