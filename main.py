@@ -138,7 +138,14 @@ def chat():
             save_long_memory(fact)
             return jsonify({"reply": "Got it. I’ll remember that."})
         return jsonify({"reply": "Tell me what to remember."})
+    
+    important_phrases = ["i like", "i love", "my goal", "i want", "my plan"]
 
+    for phrase in important_phrases:
+        if phrase in msg:
+            save_long_memory(user_message)
+            break
+    
     if msg.startswith("forget "):
         fact = user_message[7:].strip()
 
@@ -154,9 +161,11 @@ def chat():
         facts = load_long_memory(limit=10)
 
         if facts:
+            formatted = [f.capitalize() for f in facts]
+
             return jsonify({
-                "reply": "Here’s what I know about you:\n- " + "\n- ".join(facts)
-            })
+                "reply": "Here’s what I know about you:\n• " + "\n• ".join(formatted)
+        })
 
         return jsonify({"reply": "I don’t know much about you yet."})
 
