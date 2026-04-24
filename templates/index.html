@@ -148,6 +148,7 @@
     <div id="chat"></div>
     <div class="input-box">
         <input type="text"  id="message"  placeholder="ASK FRIDAY...">
+        <button type="button" onclick="startVoice()">🎤</button>
         <button type="button" onclick="sendMessage()">Send</button>
     </div>
     <script>
@@ -200,7 +201,29 @@
                   
                     isLoading = false;
                }
+    function startVoice() {
+        if (!("webkitSpeechRecognition" in window)) {
+            alert("Voice input is not supported in this browser.");
+            return;
+        }
 
+        let recognition = new webkitSpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.start();
+
+        recognition.onresult = function(event) {
+            let voiceText = event.results[0][0].transcript;
+            document.getElementById("message").value = voiceText;
+        };
+
+        recognition.onerror = function(event) {
+            alert("Voice error: " + event.error);
+        };
+    }
+    
     </script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
