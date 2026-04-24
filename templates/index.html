@@ -146,10 +146,24 @@
     <h1 class="top-bar">FRIDAY AI ⚡</h1>
 
     <div id="chat"></div>
-    <div class="input-box">
-        <input type="text"  id="message"  placeholder="ASK FRIDAY...">
-        <button type="button" onclick="startVoice()">🎤</button>
-        <button type="button" onclick="sendMessage()">Send</button>
+    <div class="input-box" style="display:flex; gap:8px; align-items:center;">
+
+        <input type="text" id="message" placeholder="ASK FRIDAY..."
+            style="flex:1; padding:12px; border-radius:10px; border:none;
+            background:#1e293b; color:white; outline:none;">
+
+        <button onclick="startVoice()"
+            style="padding:10px 12px; border:none; border-radius:10px;
+            background:#0ea5e9; color:white; font-size:18px;">
+            🎤
+        </button>
+
+        <button onclick="sendMessage()"
+            style="padding:10px 12px; border:none; border-radius:10px;
+            background:#22c55e; color:white; font-size:18px;">
+            ➤
+        </button>
+
     </div>
     <script>
     
