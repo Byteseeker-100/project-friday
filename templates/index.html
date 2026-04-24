@@ -261,6 +261,7 @@
             recognition.onresult = function(event) {
                 let voiceText = event.results[0][0].transcript;
                 document.getElementById("message").value = voiceText;
+                sendMessage();
             };
 
             recognition.onerror = function(event) {
