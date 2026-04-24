@@ -188,7 +188,7 @@ def chat():
                 "Content-Type": "application/json"
             },
             json={
-                "model": "openai/gpt-5.2",
+                "model": "openrouter/auto",
                 "messages": [system_prompt] + memory,
                 "temperature": 0.7,
                 "max_tokens": 500
