@@ -130,6 +130,36 @@ def chat():
         clear_memory()
         return jsonify({"reply": "Memory cleared ✅"})
 
+    # ---- JARVIS COMMAND SYSTEM ----
+
+    if msg.startswith("remember "):
+        fact = user_message[9:].strip()
+        if fact:
+            save_long_memory(fact)
+            return jsonify({"reply": "Got it. I’ll remember that."})
+        return jsonify({"reply": "Tell me what to remember."})
+
+    if msg.startswith("forget "):
+        fact = user_message[7:].strip()
+
+        conn = sqlite3.connect("friday.db")
+        c = conn.cursor()
+        c.execute("DELETE FROM long_memory WHERE content LIKE ?", (f"%{fact}%",))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"reply": "Okay, I forgot that."})
+
+    if "what do you know about me" in msg:
+        facts = load_long_memory(limit=10)
+
+        if facts:
+            return jsonify({
+                "reply": "Here’s what I know about you:\n- " + "\n- ".join(facts)
+            })
+
+        return jsonify({"reply": "I don’t know much about you yet."})
+
     # ---- NAME DETECTION ----
     if "my name is" in msg:
         name = msg.split("my name is")[-1].strip().split()[0]
@@ -155,7 +185,6 @@ def chat():
         if word in msg:
             save_long_memory(user_message)
 
-    # ---- SAVE USER MESSAGE ----
     save_message("user", user_message)
 
     memory = load_memory()
@@ -177,7 +206,6 @@ def chat():
         )
     }
 
-    # ---- AI REQUEST WITH FALLBACK ----
     models = [
         "openai/gpt-oss-120b:free",
         "openrouter/auto"
@@ -222,7 +250,6 @@ def chat():
     save_message("assistant", reply)
 
     return jsonify({"reply": reply})
-
 # ---------------- RUN ---------------- #
 
 if __name__ == "__main__":
