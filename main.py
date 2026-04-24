@@ -213,6 +213,9 @@ def chat():
             "- Do NOT assume tools or powers you do not have.\n"
             "- Reply short unless the user asks for detailed explanation.\n"
             "- Respond like ChatGPT: clear, useful, and friendly.\n"
+            "- Keep most replies under 4 short sentences.\n"
+            "- Do NOT use tables unless the user asks.\n"
+            "- For suggestions, give only 3 best options first.\n"
         )
     }
 
