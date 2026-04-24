@@ -139,7 +139,7 @@ def chat():
             return jsonify({"reply": "Got it. I’ll remember that."})
         return jsonify({"reply": "Tell me what to remember."})
     
-    important_phrases = ["i like", "i love", "my goal", "i want", "my plan"]
+    important_phrases = ["i like", "i love", "my goal", "i want", "my plan", "my project"]
 
     for phrase in important_phrases:
         if phrase in msg:
@@ -207,8 +207,9 @@ def chat():
             f"Important facts:\n{chr(10).join(facts)}\n\n"
             "Rules:\n"
             "- Be natural and helpful.\n"
+            "- Use important facts naturally when relevant.\n"
+            "- Do not mention stored memory unless the user asks.\n"
             "- Do NOT repeat introductions.\n"
-            "- Do NOT say you remember conversations.\n"
             "- Do NOT assume tools or powers you do not have.\n"
             "- Reply short unless the user asks for detailed explanation.\n"
             "- Respond like ChatGPT: clear, useful, and friendly.\n"
