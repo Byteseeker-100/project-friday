@@ -189,7 +189,7 @@ def chat():
                 "Content-Type": "application/json"
             },
             json={
-                "model": "gpt-oss-120b",
+                "model": "openai/gpt-oss-120b:free",
                 "messages": [system_prompt] + memory,
                 "temperature": 0.7,
                 "max_tokens": 500
