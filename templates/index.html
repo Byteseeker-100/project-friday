@@ -236,6 +236,7 @@
                 document.getElementById("typing").remove();
 
                 chat.innerHTML += `<div class="ai">${marked.parse(data.reply)}</div>`;
+                speakReply(data.reply);
                 chat.scrollTop = chat.scrollHeight;
             } catch (error) {
                 document.getElementById("typing").remove();
