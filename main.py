@@ -8,6 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 API_KEY = os.getenv("API_KEY")
+print("API KEY:", API_KEY[:10], "length:", len(API_KEY), flush=True)
 
 # ---------------- DATABASE ---------------- #
 
@@ -198,7 +199,7 @@ def chat():
 
         data = response.json()
         print("OPENROUTER RESPONSE:", data, flush=True)
-        
+
         if "choices" in data:
             reply = data["choices"][0]["message"]["content"]
         else:
