@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = os.environ.get("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")
+API_KEY = os.getenv("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")
 
 # ---------------- DATABASE ---------------- #
 
