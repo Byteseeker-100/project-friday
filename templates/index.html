@@ -268,6 +268,32 @@
                 alert("Voice error: " + event.error);
             };
         }
+        function speakReply(text) {
+            if (!("speechSynthesis" in window)) return;
+
+            let cleanText = text.replace(/[*_`#>-]/g, "");
+
+            let utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = "en-US";
+            utterance.rate = 1;
+            utterance.pitch = 1.2; // slightly higher → more female tone
+
+            let voices = speechSynthesis.getVoices();
+
+    // Try to pick a female voice
+            let femaleVoice = voices.find(v =>
+                v.name.toLowerCase().includes("female") ||
+                v.name.toLowerCase().includes("zira") ||
+                v.name.toLowerCase().includes("samantha") ||
+                v.name.toLowerCase().includes("google us english")
+            );
+
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            }
+
+             speechSynthesis.speak(utterance);
+        }
     </script>
 </body>
 </html>
