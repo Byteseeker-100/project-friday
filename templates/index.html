@@ -29,14 +29,24 @@
         }
 
         .top-bar {
-            text-align: center;
-            padding: 16px;
-            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            font-size: 20px;
             font-weight: bold;
             background: #000;
             border-bottom: 1px solid #333;
             color: #38bdf8;
-            text-shadow: 0 0 10px #38bdf8;
+            text-shadow: 0 0 12px #38bdf8;
+        } 
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px #38bdf8);
         }
 
         #chat {
@@ -177,9 +187,17 @@
 </head>
 
 <body>
-    <h1 class="top-bar">FRIDAY AI ⚡</h1>
+    <div class="top-bar">
+        <img src="/static/icon.png" class="logo">
+        <span>FRIDAY AI</span>
+    </div>
 
-    <div id="chat"></div>
+    <div id="chat">
+        <div class="ai">
+            👋 Hello, I’m <b>FRIDAY</b>.<br>
+            How can I assist you today?
+        </div>
+    </div>
 
     <div class="input-box">
         <input type="text" id="message" placeholder="ASK FRIDAY...">
