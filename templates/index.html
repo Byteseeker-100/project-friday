@@ -283,12 +283,16 @@
         .wave span:nth-child(4) { animation-delay: 0.6s; }
 
         .vision-output {
-            margin-top: 15px;
+            margin-top: 16px;
+            max-width: 250px;
+            max-height: 120px;
+            overflow-y: auto;
             text-align: center;
-            font-size: 14px;
-            line-height: 1.6;
-            max-width: 220px;
+            font-size: 13px;
+            line-height: 1.5;
             color: #e2e8f0;
+            text-shadow: 0 0 8px rgba(56,189,248,0.4);
+            z-index: 3;
         }
 
         @keyframes waveAnim {
@@ -376,6 +380,17 @@
                 sendMessage();
             }
         });
+        function showVisionOutput(text) {
+            let box = document.getElementById("visionOutput");
+
+            let clean = text
+                .replace(/[*_`#>-]/g, "")
+                .split("\n")
+                .filter(line => line.trim() !== "")
+                .slice(0, 5);
+
+            box.innerHTML = clean.map(line => `• ${line}`).join("<br>");
+        }
 
         function toggleMenu() {
             let menu = document.getElementById("menuBox");
