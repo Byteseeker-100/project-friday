@@ -217,6 +217,7 @@ def chat():
             "- Do NOT use tables unless the user asks.\n"
             "- For suggestions, give only 3 best options first.\n"
             "- If the user asks for detailed explanation, then explain step by step.\n"
+            "- For summaries, use short bullet-style lines.\n"
         )
     }
 
