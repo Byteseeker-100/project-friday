@@ -558,6 +558,10 @@
 
                 updateVisionStatus("SPEAKING");
                 showWave(true);
+
+                // stop recognition while speaking
+                try { visionRecognition.stop(); } catch(e) {}
+
                 speakReply(data.reply);
 
             } catch (error) {
@@ -597,6 +601,13 @@
             utterance.onend = function() {
                 showWave(false);
                 updateVisionStatus("SYSTEM ONLINE");
+
+    // restart listening after speaking
+                if (isVisionActive && visionRecognition) {
+                    try {
+                        visionRecognition.start();
+                    } catch (e) {}
+                }
             };
 
             utterance.onerror = function() {
