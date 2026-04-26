@@ -294,8 +294,9 @@
 
             let utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = "en-US";
-            utterance.rate = 1;
-            utterance.pitch = 1.2; // slightly higher → more female tone
+            utterance.rate = 0.9;
+            utterance.pitch = 0.9;
+            utterance.volume = 1; 
 
             let voices = speechSynthesis.getVoices();
 
