@@ -199,9 +199,7 @@
             flex: 1;
             height: 100%;
             overflow: hidden;
-            background: radial-gradient(circle at center, #0f172a 0%, #020617 72%);
-            align-items: center;
-            justify-content: center;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 70%);
             color: #38bdf8;
         }
 
@@ -223,95 +221,115 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 85px;
+            padding: 30px;
         }
 
         .vision-core {
             position: relative;
-            width: 340px;
-            height: 340px;
+            width: 360px;
+            height: 360px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-right: 360px;
-        }
-
-        .ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid #38bdf8;
-            box-shadow: 0 0 18px #38bdf8;
-        }
-
-        .ring1 {
-            width: 250px;
-            height: 250px;
-            animation: rotateRight 8s linear infinite;
-            border-top-color: transparent;
-        }
-
-        .ring2 {
-            width: 185px;
-            height: 185px;
-            animation: rotateLeft 5s linear infinite;
-            border-bottom-color: transparent;
-        }
-
-        .ring3 {
-            width: 115px;
-            height: 115px;
-            animation: pulseCore 2s ease-in-out infinite;
         }
 
         .audio-ring {
             position: absolute;
-            width: 320px;
-            height: 320px;
+            width: 330px;
+            height: 330px;
             border-radius: 50%;
-            z-index: 1;
+            animation: rotateRight 14s linear infinite;
         }
 
-        .audio-ring span {
+        .audio-bar {
             position: absolute;
             left: 50%;
             top: 50%;
             width: 4px;
-            height: 34px;
-            background: linear-gradient(#67e8f9, #2563eb);
+            height: 30px;
+            background: linear-gradient(#22d3ee, #2563eb);
             border-radius: 10px;
-            transform-origin: 0 155px;
+            transform-origin: 0 140px;
             box-shadow: 0 0 10px #38bdf8;
-            opacity: 0.85;
-            animation: barPulse 1.15s infinite ease-in-out;
+            animation: barPulse 1.4s infinite ease-in-out;
         }
 
-        .vision-title {
-            font-size: 30px;
+        .glow-ring {
+            position: absolute;
+            width: 245px;
+            height: 245px;
+            border-radius: 50%;
+            border: 2px solid rgba(56,189,248,0.85);
+            box-shadow: 0 0 25px rgba(56,189,248,0.9), inset 0 0 18px rgba(56,189,248,0.25);
+        }
+
+        .inner-core {
+            width: 165px;
+            height: 165px;
+            border: 2px solid #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 25px #38bdf8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.72);
+            text-align: center;
+            z-index: 3;
+        }
+
+        #visionStatus {
+            font-size: 22px;
             letter-spacing: 5px;
             font-weight: bold;
-            text-shadow: 0 0 15px #38bdf8;
-            z-index: 3;
-            text-align: center;
+            color: #7dd3fc;
+            text-shadow: 0 0 16px #38bdf8;
         }
 
         .vision-sub {
-            margin-top: 12px;
-            font-size: 13px;
+            margin-top: 8px;
+            font-size: 12px;
             letter-spacing: 3px;
-            color: #67e8f9;
-            text-shadow: 0 0 10px #38bdf8;
-            z-index: 3;
-            text-align: center;
+            color: #94a3b8;
         }
 
-        .mini-wave {
-            margin-top: 22px;
+        .visual-panel {
+            width: 370px;
+            min-height: 230px;
+            max-height: 430px;
+            overflow-y: auto;
+            border: 1px solid rgba(56,189,248,0.7);
+            background: rgba(2, 6, 23, 0.76);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 0 25px rgba(56,189,248,0.25);
+            backdrop-filter: blur(6px);
+        }
+
+        .visual-panel h3 {
+            margin: 0 0 14px;
+            font-size: 15px;
+            letter-spacing: 3px;
+            color: #e2e8f0;
+            border-bottom: 1px solid rgba(56,189,248,0.35);
+            padding-bottom: 12px;
+        }
+
+        #visionOutput {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .wave {
+            margin-top: 12px;
             display: flex;
-            gap: 4px;
-            z-index: 3;
+            gap: 5px;
+            z-index: 4;
         }
 
-        .mini-wave span {
+        .wave span {
             width: 4px;
             height: 18px;
             background: #38bdf8;
@@ -320,58 +338,13 @@
             animation: waveAnim 1s infinite ease-in-out;
         }
 
-        .mini-wave span:nth-child(2) { animation-delay: 0.15s; }
-        .mini-wave span:nth-child(3) { animation-delay: 0.3s; }
-        .mini-wave span:nth-child(4) { animation-delay: 0.45s; }
-        .mini-wave span:nth-child(5) { animation-delay: 0.6s; }
-
-        .vision-output-panel {
-            position: absolute;
-            right: 38px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 330px;
-            max-height: 72%;
-            padding: 20px;
-            border: 1px solid rgba(56,189,248,0.75);
-            border-radius: 18px;
-            background: rgba(2, 6, 23, 0.72);
-            box-shadow: 0 0 25px rgba(56,189,248,0.25);
-            color: #e2e8f0;
-            z-index: 4;
-            overflow-y: auto;
-        }
-
-        .vision-output-heading {
-            font-size: 16px;
-            letter-spacing: 2px;
-            color: #bae6fd;
-            font-weight: bold;
-            margin-bottom: 14px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(56,189,248,0.35);
-            text-shadow: 0 0 10px rgba(56,189,248,0.7);
-        }
-
-        .vision-output {
-            font-size: 14px;
-            line-height: 1.55;
-            color: #e2e8f0;
-        }
-
-        .vision-output .empty-output {
-            color: #64748b;
-            font-size: 13px;
-            letter-spacing: 1px;
-        }
-
-        .vision-output div {
-            margin-bottom: 8px;
-        }
+        .wave span:nth-child(2) { animation-delay: 0.2s; }
+        .wave span:nth-child(3) { animation-delay: 0.4s; }
+        .wave span:nth-child(4) { animation-delay: 0.6s; }
 
         @keyframes barPulse {
-            0%, 100% { height: 18px; opacity: 0.45; }
-            50% { height: 60px; opacity: 1; }
+            0%, 100% { height: 20px; opacity: 0.55; }
+            50% { height: 48px; opacity: 1; }
         }
 
         @keyframes waveAnim {
@@ -384,63 +357,51 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes rotateLeft {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-
-        @keyframes pulseCore {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.12); opacity: 1; }
-        }
-
         @keyframes gridMove {
             from { background-position: 0 0; }
             to { background-position: 35px 35px; }
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 800px) {
             .vision-layout {
                 flex-direction: column;
-                justify-content: flex-start;
-                padding-top: 40px;
-                overflow-y: auto;
+                gap: 28px;
+                padding: 20px;
             }
 
             .vision-core {
-                width: 260px;
-                height: 260px;
-                margin-right: 0;
-                margin-bottom: 24px;
+                width: 280px;
+                height: 280px;
             }
 
             .audio-ring {
-                width: 245px;
-                height: 245px;
+                width: 260px;
+                height: 260px;
             }
 
-            .audio-ring span {
-                transform-origin: 0 118px;
+            .audio-bar {
                 height: 24px;
+                transform-origin: 0 112px;
             }
 
-            .ring1 { width: 210px; height: 210px; }
-            .ring2 { width: 155px; height: 155px; }
-            .ring3 { width: 95px; height: 95px; }
+            .glow-ring {
+                width: 195px;
+                height: 195px;
+            }
 
-            .vision-title {
-                font-size: 20px;
+            .inner-core {
+                width: 135px;
+                height: 135px;
+            }
+
+            #visionStatus {
+                font-size: 17px;
                 letter-spacing: 3px;
             }
 
-            .vision-output-panel {
-                position: relative;
-                right: auto;
-                top: auto;
-                transform: none;
-                width: calc(100% - 28px);
-                max-height: 230px;
-                margin-bottom: 25px;
+            .visual-panel {
+                width: 92%;
+                max-height: 220px;
             }
         }
     </style>
@@ -472,24 +433,21 @@
         <div class="vision-layout">
             <div class="vision-core">
                 <div class="audio-ring" id="audioRing"></div>
+                <div class="glow-ring"></div>
 
-                <div class="ring ring1"></div>
-                <div class="ring ring2"></div>
-                <div class="ring ring3"></div>
+                <div class="inner-core">
+                    <div id="visionStatus">FRIDAY</div>
+                    <div class="vision-sub">SYSTEM ONLINE</div>
 
-                <div class="vision-title">FRIDAY</div>
-                <div id="visionStatus" class="vision-sub">SYSTEM ONLINE</div>
-
-                <div class="mini-wave" id="voiceWave" style="display:none;">
-                    <span></span><span></span><span></span><span></span><span></span>
+                    <div class="wave" id="voiceWave" style="display:none;">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
                 </div>
             </div>
 
-            <div class="vision-output-panel">
-                <div class="vision-output-heading">VISUAL OUTPUT</div>
-                <div id="visionOutput" class="vision-output">
-                    <span class="empty-output">Say “Friday” to activate.</span>
-                </div>
+            <div class="visual-panel">
+                <h3>VISUAL OUTPUT</h3>
+                <div id="visionOutput">Say “Friday” to activate.</div>
             </div>
         </div>
     </div>
@@ -509,29 +467,26 @@
         let isVisionActive = false;
         let wakeDetected = false;
 
+        function createAudioRing() {
+            const ring = document.getElementById("audioRing");
+            if (!ring || ring.children.length > 0) return;
+
+            for (let i = 0; i < 72; i++) {
+                let bar = document.createElement("div");
+                bar.className = "audio-bar";
+                bar.style.transform = `rotate(${i * 5}deg) translateY(-140px)`;
+                bar.style.animationDelay = (i * 0.035) + "s";
+                ring.appendChild(bar);
+            }
+        }
+
+        createAudioRing();
+
         document.getElementById("message").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !isLoading) {
                 sendMessage();
             }
         });
-
-        function createAudioRing() {
-            let ring = document.getElementById("audioRing");
-            ring.innerHTML = "";
-
-            for (let i = 0; i < 72; i++) {
-                let bar = document.createElement("span");
-                let delay = (i % 12) * 0.08;
-                let height = 18 + ((i * 7) % 42);
-
-                bar.style.transform = `rotate(${i * 5}deg) translate(-50%, -155px)`;
-                bar.style.animationDelay = `${delay}s`;
-                bar.style.height = `${height}px`;
-
-                ring.appendChild(bar);
-            }
-        }
-
         function showVisionOutput(text) {
             let box = document.getElementById("visionOutput");
 
@@ -539,14 +494,9 @@
                 .replace(/[*_`#>-]/g, "")
                 .split("\n")
                 .filter(line => line.trim() !== "")
-                .slice(0, 8);
+                .slice(0, 5);
 
-            if (clean.length === 0) {
-                box.innerHTML = `<span class="empty-output">No visual output.</span>`;
-                return;
-            }
-
-            box.innerHTML = clean.map(line => `<div>• ${line}</div>`).join("");
+            box.innerHTML = clean.map(line => `• ${line}`).join("<br>");
         }
 
         function toggleMenu() {
@@ -571,13 +521,12 @@
 
         function showVision() {
             document.getElementById("chat").style.display = "none";
-            document.getElementById("vision").style.display = "flex";
+            document.getElementById("vision").style.display = "block";
             document.getElementById("inputBox").style.display = "none";
             document.getElementById("menuBox").style.display = "none";
 
-            updateVisionStatus("SYSTEM ONLINE");
+            updateVisionStatus("FRIDAY");
             showWave(false);
-            createAudioRing();
 
             if (!isVisionActive) {
                 startVisionVoice();
@@ -689,14 +638,14 @@
                 if (heard.includes("stop")) {
                     stopSpeaking();
                     wakeDetected = false;
-                    updateVisionStatus("SYSTEM ONLINE");
+                    updateVisionStatus("FRIDAY");
                     return;
                 }
 
                 if (heard.includes("friday")) {
                     wakeDetected = true;
                     updateVisionStatus("LISTENING");
-                    showVisionOutput("Listening. Ask your command now.");
+                    document.getElementById("visionOutput").innerHTML = "Listening...";
                     return;
                 }
 
@@ -708,7 +657,7 @@
 
             visionRecognition.onerror = function(event) {
                 console.log("Vision voice error:", event.error);
-                updateVisionStatus("SYSTEM ONLINE");
+                updateVisionStatus("FRIDAY");
             };
 
             visionRecognition.onend = function() {
@@ -731,7 +680,7 @@
         async function sendVisionMessage(message) {
             isLoading = true;
             updateVisionStatus("THINKING");
-            showVisionOutput(`You said: ${message}`);
+            document.getElementById("visionOutput").innerHTML = `You said: ${message}`;
 
             try {
                 let response = await fetch("/chat", {
@@ -745,6 +694,7 @@
                 updateVisionStatus("SPEAKING");
                 showWave(true);
 
+                // stop recognition while speaking
                 try { visionRecognition.stop(); } catch(e) {}
 
                 showVisionOutput(data.reply);
@@ -753,7 +703,6 @@
             } catch (error) {
                 updateVisionStatus("ERROR");
                 showWave(false);
-                showVisionOutput("Connection error. Try again.");
             }
 
             isLoading = false;
@@ -787,8 +736,9 @@
 
             utterance.onend = function() {
                 showWave(false);
-                updateVisionStatus("SYSTEM ONLINE");
+                updateVisionStatus("FRIDAY");
 
+    // restart listening after speaking
                 if (isVisionActive && visionRecognition) {
                     try {
                         visionRecognition.start();
@@ -798,13 +748,11 @@
 
             utterance.onerror = function() {
                 showWave(false);
-                updateVisionStatus("SYSTEM ONLINE");
+                updateVisionStatus("FRIDAY");
             };
 
             speechSynthesis.speak(utterance);
         }
-
-        createAudioRing();
     </script>
 </body>
 </html>
