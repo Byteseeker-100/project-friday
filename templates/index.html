@@ -29,6 +29,7 @@
         }
 
         .top-bar {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -47,6 +48,41 @@
             height: 32px;
             object-fit: contain;
             filter: drop-shadow(0 0 6px #38bdf8);
+        }
+
+        .menu-btn {
+            position: absolute;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: #38bdf8;
+            font-size: 24px;
+        }
+
+        .menu-box {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 12px;
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 8px;
+            z-index: 1000;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+        }
+
+        .menu-box button {
+            display: block;
+            width: 130px;
+            padding: 12px;
+            margin: 4px 0;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 15px;
         }
 
         #chat {
@@ -183,6 +219,47 @@
             20% { opacity: 1; }
             100% { opacity: 0.2; }
         }
+        #vision {
+            flex: 1;
+            height: 100%;
+            background: radial-gradient(circle, #0f172a, #020617 70%);
+            align-items: center;
+            justify-content: center;
+            color: #38bdf8;
+        }
+
+        .vision-core {
+            text-align: center;
+        }
+
+        .vision-circle {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #38bdf8;
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            box-shadow: 0 0 25px #38bdf8;
+            animation: visionPulse 2s infinite;
+        }
+
+        .vision-title {
+            font-size: 22px;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        .vision-sub {
+            margin-top: 8px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #94a3b8;
+        }
+
+        @keyframes visionPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.12); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 
@@ -190,12 +267,26 @@
     <div class="top-bar">
         <img src="/static/icon.png" class="logo">
         <span>FRIDAY AI</span>
+
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="menu-box" id="menuBox">
+            <button onclick="showChat()">💬 Chat</button>
+            <button onclick="showVision()">◉ Vision</button>
+        </div>
     </div>
 
     <div id="chat">
         <div class="ai">
             👋 Hello, I’m <b>FRIDAY</b>.<br>
             How can I assist you today?
+        </div>
+    </div>
+    <div id="vision" style="display:none;">
+        <div class="vision-core">
+            <div class="vision-circle"></div>
+            <div class="vision-title">FRIDAY VISION</div>
+            <div class="vision-sub">SYSTEM ONLINE</div>
         </div>
     </div>
 
@@ -313,6 +404,22 @@
             }
 
              speechSynthesis.speak(utterance);
+        }
+        function toggleMenu() {
+            let menu = document.getElementById("menuBox");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function showChat() {
+            document.getElementById("chat").style.display = "block";
+            document.getElementById("vision").style.display = "none";
+            document.getElementById("menuBox").style.display = "none";
+        }
+
+        function showVision() {
+            document.getElementById("chat").style.display = "none";
+            document.getElementById("vision").style.display = "flex";
+            document.getElementById("menuBox").style.display = "none";
         }
     </script>
 </body>
