@@ -8,9 +8,7 @@
     <title>FRIDAY AI</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         html, body {
             margin: 0;
@@ -41,7 +39,7 @@
             border-bottom: 1px solid #333;
             color: #38bdf8;
             text-shadow: 0 0 12px #38bdf8;
-        } 
+        }
 
         .logo {
             width: 32px;
@@ -100,7 +98,6 @@
             border-radius: 12px;
             background: #38bdf8;
             color: black;
-            text-align: left;
         }
 
         .ai {
@@ -111,7 +108,6 @@
             border-radius: 12px;
             background: #1e293b;
             color: #e2e8f0;
-            text-align: left;
         }
 
         .ai code {
@@ -128,13 +124,7 @@
             overflow-x: auto;
         }
 
-        .ai p {
-            margin: 0 0 8px;
-        }
-
-        .ai ul {
-            padding-left: 18px;
-        }
+        .ai p { margin: 0 0 8px; }
 
         .input-box {
             position: fixed;
@@ -163,12 +153,7 @@
             font-size: 16px;
         }
 
-        .input-box input::placeholder {
-            color: #94a3b8;
-        }
-
-        .mic-btn,
-        .send-btn {
+        .mic-btn, .send-btn {
             width: 54px;
             height: 54px;
             min-width: 54px;
@@ -179,19 +164,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+            transition: transform 0.12s ease, opacity 0.12s ease;
         }
 
-        .mic-btn {
-            background: #0ea5e9;
-        }
+        .mic-btn { background: #0ea5e9; }
+        .send-btn { background: #22c55e; }
 
-        .send-btn {
-            background: #22c55e;
-        }
-
-        .mic-btn:active,
-        .send-btn:active {
+        .mic-btn:active, .send-btn:active {
             transform: scale(0.88);
             opacity: 0.75;
         }
@@ -206,19 +185,15 @@
             animation: blink 1.4s infinite;
         }
 
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes blink {
             0% { opacity: 0.2; }
             20% { opacity: 1; }
             100% { opacity: 0.2; }
         }
+
         #vision {
             position: relative;
             flex: 1;
@@ -229,6 +204,7 @@
             justify-content: center;
             color: #38bdf8;
         }
+
         .vision-grid {
             position: absolute;
             inset: 0;
@@ -238,24 +214,11 @@
             background-size: 35px 35px;
             animation: gridMove 12s linear infinite;
         }
-        .scan-line {
-            position: absolute;
-            top: -20%;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(
-                transparent,
-                rgba(56,189,248,0.18),
-                transparent
-            );
-            animation: scanMove 4s linear infinite;
-        }
 
         .vision-core {
             position: relative;
-            width: 260px;
-            height: 260px;
+            width: 280px;
+            height: 280px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -271,76 +234,57 @@
         }
 
         .ring1 {
-            width: 230px;
-            height: 230px;
+            width: 240px;
+            height: 240px;
             animation: rotateRight 8s linear infinite;
             border-top-color: transparent;
         }
 
         .ring2 {
-            width: 170px;
-            height: 170px;
+            width: 175px;
+            height: 175px;
             animation: rotateLeft 5s linear infinite;
             border-bottom-color: transparent;
         }
 
         .ring3 {
-            width: 100px;
-            height: 100px;
+            width: 105px;
+            height: 105px;
             animation: pulseCore 2s ease-in-out infinite;
         }
 
         .vision-title {
-            font-size: 21px;
+            font-size: 18px;
             letter-spacing: 3px;
             font-weight: bold;
             text-shadow: 0 0 12px #38bdf8;
             z-index: 3;
+            text-align: center;
         }
 
-        .vision-sub {
-            margin-top: 8px;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: #94a3b8;
+        .wave {
+            margin-top: 18px;
+            display: flex;
+            gap: 5px;
             z-index: 3;
         }
 
-        .vision-panel {
-            position: absolute;
-            width: 130px;
-            padding: 12px;
-            border: 1px solid rgba(56,189,248,0.4);
-            background: rgba(15,23,42,0.55);
-            border-radius: 12px;
-            z-index: 2;
-            box-shadow: 0 0 15px rgba(56,189,248,0.25);
+        .wave span {
+            width: 5px;
+            height: 22px;
+            background: #38bdf8;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #38bdf8;
+            animation: waveAnim 1s infinite ease-in-out;
         }
 
-        .vision-panel p {
-            margin: 0;
-            font-size: 11px;
-            color: #94a3b8;
-        }
+        .wave span:nth-child(2) { animation-delay: 0.2s; }
+        .wave span:nth-child(3) { animation-delay: 0.4s; }
+        .wave span:nth-child(4) { animation-delay: 0.6s; }
 
-        .vision-panel h3 {
-            margin: 6px 0;
-            font-size: 18px;
-        }
-
-        .vision-panel span {
-            font-size: 10px;
-            color: #38bdf8;
-        }
-
-        .left-panel {
-            left: 18px;
-            top: 120px;
-        }
-
-        .right-panel {
-            right: 18px;
-            bottom: 120px;
+        @keyframes waveAnim {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1.5); }
         }
 
         @keyframes rotateRight {
@@ -356,11 +300,6 @@
         @keyframes pulseCore {
             0%, 100% { transform: scale(1); opacity: 0.7; }
             50% { transform: scale(1.12); opacity: 1; }
-        }
-
-        @keyframes scanMove {
-            from { top: -20%; }
-            to { top: 110%; }
         }
 
         @keyframes gridMove {
@@ -389,33 +328,24 @@
             How can I assist you today?
         </div>
     </div>
+
     <div id="vision" style="display:none;">
         <div class="vision-grid"></div>
-        <div class="scan-line"></div>
-
-        <div class="vision-panel left-panel">
-            <p>STATUS</p>
-            <h3>ONLINE</h3>
-            <span>CORE ACTIVE</span>
-        </div>
-
-        <div class="vision-panel right-panel">
-            <p>VOICE</p>
-            <h3>READY</h3>
-            <span>LISTENING MODULE</span>
-        </div>
 
         <div class="vision-core">
             <div class="ring ring1"></div>
             <div class="ring ring2"></div>
             <div class="ring ring3"></div>
 
-            <div class="vision-title">FRIDAY VISION</div>
-            <div class="vision-sub">SYSTEM ONLINE</div>
+            <div id="visionStatus" class="vision-title">SYSTEM ONLINE</div>
+
+            <div class="wave" id="voiceWave" style="display:none;">
+                <span></span><span></span><span></span><span></span>
+            </div>
         </div>
     </div>
 
-    <div class="input-box">
+    <div class="input-box" id="inputBox">
         <input type="text" id="message" placeholder="ASK FRIDAY...">
         <button class="mic-btn" type="button" onclick="startVoice()">🎤</button>
         <button class="send-btn" type="button" onclick="sendMessage()">➤</button>
@@ -425,6 +355,10 @@
 
     <script>
         let isLoading = false;
+        let recognition;
+        let visionRecognition;
+        let isVisionActive = false;
+        let wakeDetected = false;
 
         document.getElementById("message").addEventListener("keypress", function(event) {
             if (event.key === "Enter" && !isLoading) {
@@ -432,8 +366,54 @@
             }
         });
 
+        function toggleMenu() {
+            let menu = document.getElementById("menuBox");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function showChat() {
+            document.getElementById("chat").style.display = "block";
+            document.getElementById("vision").style.display = "none";
+            document.getElementById("inputBox").style.display = "flex";
+            document.getElementById("menuBox").style.display = "none";
+
+            wakeDetected = false;
+            stopSpeaking();
+
+            if (visionRecognition) {
+                visionRecognition.stop();
+                isVisionActive = false;
+            }
+        }
+
+        function showVision() {
+            document.getElementById("chat").style.display = "none";
+            document.getElementById("vision").style.display = "flex";
+            document.getElementById("inputBox").style.display = "none";
+            document.getElementById("menuBox").style.display = "none";
+
+            updateVisionStatus("SYSTEM ONLINE");
+            showWave(false);
+
+            if (!isVisionActive) {
+                startVisionVoice();
+                isVisionActive = true;
+            }
+        }
+
+        function updateVisionStatus(text) {
+            document.getElementById("visionStatus").innerText = text;
+        }
+
+        function showWave(show) {
+            document.getElementById("voiceWave").style.display = show ? "flex" : "none";
+        }
+
         function stopSpeaking() {
-            speechSynthesis.cancel();
+            if ("speechSynthesis" in window) {
+                speechSynthesis.cancel();
+            }
+            showWave(false);
         }
 
         async function sendMessage() {
@@ -463,9 +443,7 @@
             try {
                 let response = await fetch("/chat", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message: message })
                 });
 
@@ -474,8 +452,8 @@
                 document.getElementById("typing").remove();
 
                 chat.innerHTML += `<div class="ai">${marked.parse(data.reply)}</div>`;
-                speakReply(data.reply);
                 chat.scrollTop = chat.scrollHeight;
+
             } catch (error) {
                 document.getElementById("typing").remove();
                 chat.innerHTML += `<div class="ai">⚠️ Connection error. Try again.</div>`;
@@ -490,7 +468,7 @@
                 return;
             }
 
-            let recognition = new webkitSpeechRecognition();
+            recognition = new webkitSpeechRecognition();
             recognition.lang = "en-US";
             recognition.continuous = false;
             recognition.interimResults = false;
@@ -499,13 +477,6 @@
 
             recognition.onresult = function(event) {
                 let voiceText = event.results[0][0].transcript;
-                let text = voiceText.toLowerCase();
-
-                if (text.includes("stop")) {
-                    stopSpeaking();
-                    return;
-                }
-                
                 document.getElementById("message").value = voiceText;
                 sendMessage();
             };
@@ -514,8 +485,93 @@
                 alert("Voice error: " + event.error);
             };
         }
+
+        function startVisionVoice() {
+            if (!("webkitSpeechRecognition" in window)) {
+                updateVisionStatus("VOICE NOT SUPPORTED");
+                return;
+            }
+
+            visionRecognition = new webkitSpeechRecognition();
+            visionRecognition.lang = "en-US";
+            visionRecognition.continuous = true;
+            visionRecognition.interimResults = false;
+
+            visionRecognition.onresult = async function(event) {
+                let heard = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
+
+                console.log("Vision heard:", heard);
+
+                if (heard.includes("stop")) {
+                    stopSpeaking();
+                    wakeDetected = false;
+                    updateVisionStatus("SYSTEM ONLINE");
+                    return;
+                }
+
+                if (heard.includes("friday")) {
+                    wakeDetected = true;
+                    updateVisionStatus("LISTENING");
+                    return;
+                }
+
+                if (wakeDetected && heard.length > 2 && !isLoading) {
+                    wakeDetected = false;
+                    await sendVisionMessage(heard);
+                }
+            };
+
+            visionRecognition.onerror = function(event) {
+                console.log("Vision voice error:", event.error);
+                updateVisionStatus("SYSTEM ONLINE");
+            };
+
+            visionRecognition.onend = function() {
+                if (isVisionActive) {
+                    try {
+                        visionRecognition.start();
+                    } catch (e) {
+                        console.log("Restart voice failed:", e);
+                    }
+                }
+            };
+
+            try {
+                visionRecognition.start();
+            } catch (e) {
+                console.log("Vision start failed:", e);
+            }
+        }
+
+        async function sendVisionMessage(message) {
+            isLoading = true;
+            updateVisionStatus("THINKING");
+
+            try {
+                let response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: message })
+                });
+
+                let data = await response.json();
+
+                updateVisionStatus("SPEAKING");
+                showWave(true);
+                speakReply(data.reply);
+
+            } catch (error) {
+                updateVisionStatus("ERROR");
+                showWave(false);
+            }
+
+            isLoading = false;
+        }
+
         function speakReply(text) {
             if (!("speechSynthesis" in window)) return;
+
+            speechSynthesis.cancel();
 
             let cleanText = text.replace(/[*_`#>-]/g, "");
 
@@ -523,39 +579,32 @@
             utterance.lang = "en-US";
             utterance.rate = 0.9;
             utterance.pitch = 0.9;
-            utterance.volume = 1; 
+            utterance.volume = 1;
 
             let voices = speechSynthesis.getVoices();
 
-    // Try to pick a female voice
-            let femaleVoice = voices.find(v =>
-                v.name.toLowerCase().includes("female") ||
+            let selectedVoice = voices.find(v =>
                 v.name.toLowerCase().includes("zira") ||
                 v.name.toLowerCase().includes("samantha") ||
-                v.name.toLowerCase().includes("google us english")
+                v.name.toLowerCase().includes("google us english") ||
+                v.name.toLowerCase().includes("female")
             );
 
-            if (femaleVoice) {
-                utterance.voice = femaleVoice;
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
             }
 
-             speechSynthesis.speak(utterance);
-        }
-        function toggleMenu() {
-            let menu = document.getElementById("menuBox");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        }
+            utterance.onend = function() {
+                showWave(false);
+                updateVisionStatus("SYSTEM ONLINE");
+            };
 
-        function showChat() {
-            document.getElementById("chat").style.display = "block";
-            document.getElementById("vision").style.display = "none";
-            document.getElementById("menuBox").style.display = "none";
-        }
+            utterance.onerror = function() {
+                showWave(false);
+                updateVisionStatus("SYSTEM ONLINE");
+            };
 
-        function showVision() {
-            document.getElementById("chat").style.display = "none";
-            document.getElementById("vision").style.display = "flex";
-            document.getElementById("menuBox").style.display = "none";
+            speechSynthesis.speak(utterance);
         }
     </script>
 </body>
