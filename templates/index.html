@@ -432,6 +432,10 @@
             }
         });
 
+        function stopSpeaking() {
+            speechSynthesis.cancel();
+        }
+
         async function sendMessage() {
             let input = document.getElementById("message");
             let message = input.value.trim();
@@ -495,6 +499,13 @@
 
             recognition.onresult = function(event) {
                 let voiceText = event.results[0][0].transcript;
+                let text = voiceText.toLowerCase();
+
+                if (text.includes("stop")) {
+                    stopSpeaking();
+                    return;
+                }
+                
                 document.getElementById("message").value = voiceText;
                 sendMessage();
             };
